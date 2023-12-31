@@ -120,7 +120,7 @@ and a validation accuracy of **96.6%** on the MNIST dataset
 * See the notebook to see predictions
 
 ---
-## Contribution guidelines
+# Contribution guidelines
 * This repository aims to demystify neural networks, and any efforts aimed at simplification and enhancing accessibility will be incorporated
 * Contributions towards changing the handwritten equations into LaTeX format are welcomed and encouraged.
 
