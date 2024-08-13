@@ -119,6 +119,96 @@ We want to increase the probabilities of the true classes, therefore we minimize
 and a validation accuracy of **96.6%** on the MNIST dataset
 * See the notebook to see predictions
 
+# Batch-Normalization and Layer-Normalization
+## Batch-Normalization
+* ![alt text](images/image__.png)
+* Training Deep Neural Networks is complicated by the fact that the distribution of each layer's inputs changes during training, as the parameters of the previous layers change. 
+* This slows down the training by requiring lower learning rates and careful parameter initialization, and makes it notoriously hard to train models with saturating nonlinearities. 
+* We refer to this phenomenon as internal covariate shift, and address the problem by normalizing layer inputs
+* Our methoddraws its strength from making normalization a part of the modelarchitecture and performingthe normalization for each training mini-batch
+* Batch Normalization allows us to use much higher learningrates and be less careful about initialization
+* Batch Normalization achieves the same accuracy with 14 times fewer training steps, and beats the original model by a significant margin
+* **The change in the distributions of layers' inputs presents a problem because the layers need to continuously adapt to the new distribution. When the input distribution to a learning system changes, it is said to experience covariate shift**
+* ![alt text](images/image-1__.png)
+* ![alt text](images/image-2.png)
+
+## Layer-Normalization
+* It is common among the NLP tasks to have different sentence lengths for different training cases. This is easy to deal with in an RNN because the same weights are used at every time-step. But when we apply batch normalization to an RNN in the obvious way, we need to to compute and store separate statistics for each time step in a sequence. This is problematic if a test sequence is longer than any of the training sequences. Layer normalization does not have such problem because its normalization terms depend only on the summed inputs to a layer at the current time-step. It also has only one set of gain and bias parameters shared over all time-steps.
+* Here we just take mean-variance stats along the feature dimention, now no need for storing running mean and variance for inference!
+* ![alt text](images/image-5.png)
+
+### Comparision
+* As you can see with normalization, the model learns/overfits faster than the model without it
+* ![alt text](images/image-4.png)![alt text](images/image-3.png)![alt text](images/image-7.png)
+
+  No Normalization:    `Epoch: 30/30 | Loss: 0.0205 | Avg time per step: 0.44 ms | Validation Loss: 0.0649 |`\
+  Batch-Normalization: `Epoch: 9/30  | Loss: 0.0167 | Avg time per step: 0.79 ms | Validation Loss: 0.0899 |`\
+  Layer-Normalization: `Epoch: 14/30 | Loss: 0.0050 | Avg time per step: 0.73 ms | Validation Loss: 0.0772 |`
+
+* For some reason Validation Loss for model with normalization is not better than the model without any normalization, maybe it'll be better when the model gets deeper (i.e when number of layers increases) (**correct???**)
+* Batch-Normalization is worst among others, maybe it's because of the variance in the running mean-variance and the actual mean-variance stats... not sure (**correct???**)
+
+# Dropout [[Paper]](https://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf) [[Deep-Learning Book]](https://www.deeplearningbook.org/contents/regularization.html#pf20:~:text=7.12-,Dropout,-Dropout)
+* ![alt text](images/image-13.png)
+* To a ﬁrst approximation, dropout can be thought of as a method of making bagging practical for ensembles of very many large neural networks
+![alt text](images/image-15.png)
+* Dropout training is not quite the same as bagging training. In the case ofbagging, the models are all independent. In the case of dropout, the modelsshare parameters, with each model inheriting a diﬀerent subset of parametersfrom the parent neural network
+* ![alt text](images/image-14.png)
+  If a unit is retained with probability p during training, the outgoing weights of that unit are multiplied by p at test time as shown in Figure 2. This ensures that for any hidden unit the expected output (under the distribution used to drop units at training time) is the same as the actual output at test time
+* In the case of bagging, each model i produces a probability distribution
+![alt text](images/image-16.png)
+![alt text](images/image-17.png)
+Because this sum includes an exponential number of terms, it is intractable to evaluate.
+Even 10–20 masks are often suﬃcient to obtaingood performance.
+* An even better approach, however, allows us to obtain a good approximation tothe predictions of the entire ensemble, at the cost of only one forward propagation. To do so, we change to using the geometric mean rather than the arithmetic mean ofthe ensemble members’ predicted distributions
+![alt text](images/image-18.png)
+* ![alt text](images/image-19.png)
+![alt text](images/image-20.png)
+* For many classes of models that do not have nonlinear hidden units, the weight scaling inference rule is exact
+![alt text](images/image-30.png)![alt text](images/image-22.png)
+![alt text](images/image-23.png)
+* ![alt text](images/image-24.png)
+Using Properties of exponents ($e^a*e^b = e^{a+b}$ and $\sqrt{e}=e^{1/2}$) we get 
+![alt text](images/image-27.png)
+Now the term in the exp (don't take the bias) is the expectation of ![alt text](images/image-28.png)
+
+  which is ![alt text](images/image-29.png) because expectation of $d$ is just the **probablity of inclusion**
+
+  ![alt text](images/image-31.png)
+* Another method is where we would leave the inputs unchanged at inference time, but at training time we scale the retained inputs by $1/p$ where $p$ is the probabilty of inclusion. This is the method which is used in the implementation
+* Dropping out 20% of the input units and 50% of the hidden units was often found to be optimal
+(In the simplest case, each unit is retained with a fixed probability p independent of other units, where p can be chosen using a validation set or can simply be set at 0.5, which seems to be close to optimal for a wide range of networks and tasks. For the input units, however, the optimal probability of retention is usually closer to 1 than to 0.5.)
+* Bernoulli Distribution is used to mask the input values
+![alt text](images/image-32.png)
+
+### Comparision
+* Without Scaling Model\
+  ![alt text](images/image-33.png) ![alt text](images/image-34.png)
+* After Scaling Model\
+  ![alt text](images/image-35.png) ![alt text](images/image-36.png)
+  * In `nn_scale.ipynb` validation loss starts increasing...
+    Now see `dropput_scale.ipynb`, the gap between training and validation metrics is lesser than in `nn_scale.ipynb`
+* See the notebooks for the train logs
+
+# Adam and AdamW (Adam with weight decay) Optimizers
+## Adam
+* ![alt text](images/image-8.png)
+
+## AdamW
+* What's weight decay?\
+  ![alt text](images/image-12.png)
+* Paper Implementaion
+ ![alt text](images/image-9.png)
+* L2 regularization and weight decay regularization are equivalent for standard stochastic gradient descent (when rescaled by the learning rate), but as we demonstrate this is not the case for adaptive gradient algorithms, such as Adam
+* Common implementations of these algorithms employ L2 regularization (often calling it “weight decay” in what may be misleading due to the inequivalence we expose). For example see the pytorch implementation of Adam (which is wrong) below
+  ![alt text](images/image-10.png)
+* $L = CE + \left(\frac{\lambda}{2}\theta^2\right)$\
+  $\nabla L = \nabla CE + \nabla \left(\frac{\lambda}{2}\theta^2\right) = \nabla CE +  \lambda\theta$\
+  This is the same expression in above images/image for weight decay but it's actually for `L2 Loss` as shown in the equations here
+  The corrected version is given below
+  ![alt text](images/image-11.png)
+
+
 ---
 # Contribution guidelines
 * This repository aims to demystify neural networks, and any efforts aimed at simplification and enhancing accessibility will be incorporated
