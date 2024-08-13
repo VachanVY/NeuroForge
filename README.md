@@ -1,3 +1,22 @@
+# Contents
+* [Neural Networks](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#neural-networks)
+  * [Logistic Regression](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
+  * [MLP](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
+    * [Forward Propagation (Explained on Pen and Paper)](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
+    * [Back Propagation (Equations Derived on Pen and Paper)](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
+    * [Gradient Descent](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
+    * [Train Loop](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
+    * [Results](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#results)
+  * [Batch-Normalization and Layer-Normalization: **Why When Where & How?**](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#results)
+    * [Batch-Normalization](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#batch-normalization)
+    * [Layer-Normalization](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#layer-normalization)
+    * [Comparision](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#comparision)
+  * [Dropout: **Why When Where & How?**](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#dropout-paper-deep-learning-book)
+    * [Comparision before and after scaling the model](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#comparision-1)
+  * [Adam and AdamW](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
+    * [Adam](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
+    * [AdamW](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
+
 # Neural Networks
 ## Aim of this repo
 * This repo aims to make you an MLPWhiz (especially a BackpropWhiz) by creating a Neural Network from scratch **just using `torch.tensor`** (**NO using `torch`'s autograd**) and training them on the `MNIST` dataset (A dataset containing handwritten digits from 0 to 9)
@@ -67,7 +86,7 @@
 * We repeat the above processes for a number of `epochs`, till the model converges, see the training loop sub-section in the MLPs section for more details
 
 ---
-## MLPs 
+## MLPs
 ### Forward Propagation
 * We stack many layers with a relu activation in-between layers and at the end add a softmax layer which calculates the probabilities given unnormalized activations
 * Here unlike the sigmoid function we have `n_classes` number of units in the last layer where `n_classes` is the number of classes where each unit will represent the probabilities for each class given input
@@ -115,8 +134,10 @@ We want to increase the probabilities of the true classes, therefore we minimize
 
 ---
 ## Results
-* We obtain an accuracy of **97.39%** on the training set\
-and a validation accuracy of **96.6%** on the MNIST dataset
+```
+Train Accuracy:      0.9969 | Train Loss: 0.0187 |
+Validation Accuracy: 0.9794 | Validation Loss: 0.0665 |
+```
 * See the notebook to see predictions
 
 # Batch-Normalization and Layer-Normalization
@@ -219,6 +240,7 @@ Now the term in the exp (don't take the bias) is the expectation of ![alt text](
 # References
 * [**Blog**: Sigmoid, Softmax and their derivatives](https://themaverickmeerkat.com/2019-10-23-Softmax/)
 * [**Video**: Becoming a Backprop Ninja](https://www.youtube.com/watch?v=q8SA3rM6ckI)
+* Batch-Norm, Layer-Norm, Dropout, Adam and AdamW Papers
 
 # For Further Studies
 * [**Video**: Neural Networks: Zero to Hero](https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ)
