@@ -185,9 +185,10 @@ Now the term in the exp (don't take the bias) is the expectation of ![alt text](
 * Without Scaling Model\
   ![alt text](images/image-33.png) ![alt text](images/image-34.png)
 * After Scaling Model\
-  ![alt text](images/image-35.png) ![alt text](images/image-36.png)
+  ![alt text](image.png) ![alt text](images/image-36.png)
   * In `nn_scale.ipynb` validation loss starts increasing...
     Now see `dropput_scale.ipynb`, the gap between training and validation metrics is lesser than in `nn_scale.ipynb`
+  * Validation metrics has improved but at the cost of training metrics
 * See the notebooks for the train logs
 
 # Adam and AdamW (Adam with weight decay) Optimizers
