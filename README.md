@@ -243,5 +243,4 @@ Now the term in the exp (don't take the bias) is the expectation of ![alt text](
 * Batch-Norm, Layer-Norm, Dropout, Adam and AdamW Papers
 
 # For Further Studies
-* [**Video**: Neural Networks: Zero to Hero](https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ)
 * [**Book**: Deep Learning by Ian Goodfellow](https://www.deeplearningbook.org/)
