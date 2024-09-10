@@ -162,7 +162,7 @@ Validation Accuracy: 0.9794 | Validation Loss: 0.0665 |
 * ![alt text](images/image-5.png)
 
 ### Comparision
-* As you can see with normalization, the model learns/overfits faster than the model without it
+* As you can see with normalization, the model learns/overfits faster than the model without normalization
 * ![alt text](images/image-4.png)![alt text](images/image-3.png)![alt text](images/image-7.png)
 
   No Normalization:    `Epoch: 30/30 | Loss: 0.0205 | Avg time per step: 0.44 ms | Validation Loss: 0.0649 |`\
