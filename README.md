@@ -116,7 +116,7 @@ We want to increase the probabilities of the true classes, therefore we minimize
     for i in range(len(params)):
         params[i] = params[i] - lr*grads[i]
     ```
-* Additional Note: Neural Network optimization is a non-convex optimization problem
+* Additional Note: Neural Network optimization is a non-convex optimization problem\
   ![image](https://github.com/user-attachments/assets/9e6134d5-8822-401a-894a-98dda3be8eb4)
 
 ---
@@ -170,7 +170,7 @@ Validation Accuracy: 0.9794 | Validation Loss: 0.0665 |
   Layer-Normalization: `Epoch: 14/30 | Loss: 0.0050 | Avg time per step: 0.73 ms | Validation Loss: 0.0772 |`
 
 * For some reason Validation Loss for model with normalization is not better than the model without any normalization, maybe it'll be better when the model gets deeper (i.e when number of layers increases) (**correct???**)
-* Batch-Normalization is worst among others, maybe it's because of the variance in the running mean-variance and the actual mean-variance stats... not sure (**correct???**)
+* <!-- Batch-Normalization is worst among others, maybe it's because of the variance in the running mean-variance and the actual mean-variance stats... not sure (**correct???**) -->
 
 # Dropout [[Paper]](https://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf) [[Deep-Learning Book]](https://www.deeplearningbook.org/contents/regularization.html#pf20:~:text=7.12-,Dropout,-Dropout)
 * ![alt text](images/image-13.png)
