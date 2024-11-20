@@ -1,1 +1,6 @@
-.vscode
+.venv
+data
+*copy*
+*adamw.ipynb
+temp*
+delete

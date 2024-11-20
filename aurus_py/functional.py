@@ -15,16 +15,16 @@ def linear_forward(
     wie:Tensor,    # (fo, fi)
     bias:Tensor,   # (fo,)
 ):
-    return x @ wie.T + bias.unsqueeze(0) 
+    return x @ wie.transpose(-1, -2) + bias.unsqueeze(0) 
 
 def linear_backward(
     x:Tensor,       # (B, fi)
     wie:Tensor,     # (fo, fi)
-    bias:Tensor,    # (fo,)
+    bias:Tensor,    # (fo,) # we dont need this anyway
     dL_dO:Tensor,   # (B, fo)
 ):
     dL_dx = dL_dO @ wie      # (B, fi) <= (B, fo) @ (fo, fi)
-    dL_dwie = dL_dO.T @ x    # (fo, fi) <= (B, fo).T @ (B, fi)
+    dL_dwie = dL_dO.transpose(-1, -2) @ x    # (fo, fi) <= (B, fo).T @ (B, fi)
     dL_db = dL_dO.sum(dim=0) # (fo,) <= (B, fo)
     return dL_dx, dL_dwie, dL_db
 
@@ -165,21 +165,24 @@ def maxpool2d_forward(
 
 
 def maxpool2d_backward(
-    dL_dO:Tensor,
-    x_shape:torch.Size,
-    indices:tuple[Tensor, Tensor],
+    dL_dO: Tensor,
+    x_shape: torch.Size,
+    indices: tuple[Tensor, Tensor],
 ):
-    """SOMETHING IS WRONG"""
     (ridx, cidx) = indices
 
-    dL_dY = torch.zeros(x_shape) # (B, C, H, W)
-    dL_dY[:, :, ridx, cidx] += dL_dO
+    dL_dX = torch.zeros(x_shape, device=dL_dO.device)  # (B, C, H, W)
 
-    dY_dX = torch.zeros(x_shape) # (B, C, H, W)
-    dY_dX[:, :, ridx, cidx] += 1.0
+    B, C, H, W = dL_dO.shape
+    for b in range(B):
+        for c in range(C):
+            dL_dO_bc = dL_dO[b, c]  # (H, W)
 
-    dL_dX = dL_dY*dY_dX # (B, C, H, W)
-    return dL_dX # (B, C, H, W)
+            ridx_bc = ridx[b, c]  # (H, W)
+            cidx_bc = cidx[b, c]  # (H, W)
+
+            dL_dX[b, c, ridx_bc, cidx_bc] += dL_dO_bc
+    return dL_dX
 
 
 def relu_forward(x:Tensor):

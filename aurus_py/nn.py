@@ -16,6 +16,11 @@ from functional import (
     cross_entropy_forward, cross_entropy_backward,
 )
 
+# siiilllly
+_sqrt = lambda x: x**0.5
+_prod = lambda x: x[0]*x[1]
+
+
 # Base Module
 class Module:
     def forward(self, *args, **kwargs):
@@ -30,7 +35,8 @@ class Module:
 class Linear(Module):
     def __init__(self, fan_in:int, fan_out:int):
         super().__init__()
-        self.wie = torch.randn(fan_out, fan_in)
+        bound = _sqrt(2/fan_in)
+        self.wie = torch.randn(fan_out, fan_in).uniform_(-bound, bound)
         self.bias = torch.randn(fan_out)
 
     def forward(self, x:Tensor):
@@ -58,7 +64,7 @@ class Conv2d(Module):
         kernel_size:KERNEL_SIZE,
         strides:STRIDES,
     ):
-        bound = (2**0.5)/(kernel_size[0]*kernel_size[1])
+        bound = (2/_prod(kernel_size))**0.5
         self.wei = torch.empty(size=(out_channels, in_channels, kernel_size)).uniform_(-bound, bound)
         self.bias = torch.zeros(size=kernel_size[0])
         self.strides = strides
@@ -92,8 +98,10 @@ class ReLU(Module):
         return relu_backward(self.relu, dL_dO)
 
 
-class Softmax(Module): # Across the last dimension
-    def forward(self, x:Tensor):
+class Softmax(Module):
+    """    Hardcoded Across the last dimension -1     """
+    def forward(self, x:Tensor, axis:int=-1):
+        assert axis == -1, "Softmax only supports the last axis... for now :/"
         self.probs = softmax_forward(x)
         return self.probs
     def backward(self, dL_dO:Tensor):
