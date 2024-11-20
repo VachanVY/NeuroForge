@@ -64,7 +64,7 @@ class Conv2d(Module):
         kernel_size:KERNEL_SIZE,
         strides:STRIDES,
     ):
-        bound = (2/_prod(kernel_size))**0.5
+        bound = _sqrt(2/_prod(kernel_size))
         self.wei = torch.empty(size=(out_channels, in_channels, kernel_size)).uniform_(-bound, bound)
         self.bias = torch.zeros(size=kernel_size[0])
         self.strides = strides
