@@ -16,6 +16,7 @@
 * [Adam and AdamW](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
   * [Adam](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
   * [AdamW](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
+* [Model Distillation]()
 
 # Neural Networks
 ## Aim of this repo
@@ -233,6 +234,8 @@ Now the term in the exp (don't take the bias) is the expectation of ![alt text](
   The corrected version is given below
   ![alt text](images/image-11.png)
 
+# Model Distillation [[Paper]](https://arxiv.org/pdf/1503.02531) [[Reference]](https://github.com/IntelLabs/distiller/blob/master/docs-src/docs/knowledge_distillation.md?utm_source=chatgpt.com)
+* 
 
 ---
 # Contribution guidelines
