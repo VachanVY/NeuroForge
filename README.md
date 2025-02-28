@@ -16,7 +16,7 @@
 * [Adam and AdamW](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
   * [Adam](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
   * [AdamW](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
-* [Model Distillation]()
+* [Model Distillation](https://github.com/VachanVY/NeuroForge/tree/main?tab=readme-ov-file#model-distillation-paper-reference) => [*distillation.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/distillation.ipynb)
 
 # Neural Networks
 ## Aim of this repo
@@ -235,7 +235,71 @@ Now the term in the exp (don't take the bias) is the expectation of ![alt text](
   ![alt text](images/image-11.png)
 
 # Model Distillation [[Paper]](https://arxiv.org/pdf/1503.02531) [[Reference]](https://github.com/IntelLabs/distiller/blob/master/docs-src/docs/knowledge_distillation.md?utm_source=chatgpt.com)
-* 
+## Paper Snippets
+* We achieve some surprising results on MNIST and we show that we
+can significantly improve the acoustic model of a heavily used commercial system
+by distilling the knowledge in an ensemble of models into a single model
+* Once the cumbersome model has been trained, we
+can then use a different kind of training, which we call “distillation” to transfer the knowledge from
+the cumbersome model to a small model that is more suitable for deployment
+* When we are distilling the knowledge
+from a large model into a small one, however, we can train the small model to generalize in the same
+way as the large model
+* If the cumbersome model generalizes well because, for example, it is the
+average of a large ensemble of differentmodels, a small model trained to generalize in the same way
+will typically do much better on test data than a small model that is trained in the normal way on the
+same training set as was used to train the ensemble.
+* Use the class probabilities produced by the cumbersome model as “soft targets” for training the
+small model
+* Probabilities are so close to zero.
+Caruana and his collaborators circumvent this problem by using the logits (the inputs to the final
+softmax) rather than the probabilities produced by the softmax as the targets for learning the small
+model and they minimize the squared difference between the logits produced by the cumbersome
+model and the logits produced by the small model
+* Our more general solution, called “distillation”,
+is to raise the temperature of the final softmax until the cumbersome model produces a suitably soft
+set of targets. We then use the same high temperature when training the small model to match these
+soft targets. We show later that matching the logits of the cumbersome model is actually a special
+case of distillation.
+* The transfer set that is used to train the small model could consist entirely of unlabeled data
+  or we could use the original training set. We have found that using the original training set works
+well, especially if we add a small term to the objective function that encourages the small model
+to predict the true targets as well as matching the soft targets provided by the cumbersome model.
+### Distillation
+* ![image](https://github.com/user-attachments/assets/4249c130-2aa7-44de-ae19-a7e67c97646e)
+### Preliminary experiments on MNIST
+* We trained a single large neural net with two hidden layers
+of 1200 rectified linear hidden units on all 60,000 training cases
+* The net was strongly regularized
+using dropout and weight-constraints as described in [5]. Dropout can be viewed as a way of training
+an exponentially large ensemble of models that share weights
+* In addition, the input images were jittered by up to two pixels in any direction
+* This net achieved 67 test errors whereas a smaller
+net with two hidden layers of 800 rectified linear hidden units and no regularization achieved 146
+errors. But if the smaller net was regularized solely by adding the additional task of matching the soft
+targets produced by the large net at a temperature of 20, it achieved 74 test errors. This shows that
+soft targets can transfer a great deal of knowledge to the distilled model, including the knowledge
+about how to generalize that is learned from translated training data even though the transfer set does
+not contain any translations
+* *When the distilled net had 300 or more units in each of its two hidden layers, all temperatures above
+8 gave fairly similar results. But when this was radically reduced to 30 units per layer, temperatures
+in the range 2.5 to 4 worked significantly better than higher or lower temperatures*
+* **We then *tried omitting all examples of the digit 3 from the transfer set*. So from the perspective
+of the distilled model, 3 is a mythical digit that it has never seen. Despite this, the distilled model
+only makes 206 test errors of which 133 are on the 1010 threes in the test set. Most of the errors
+are caused by the fact that the learned `bias` for the 3 class is much too low. *If this `bias` is increased
+by 3.5 (which optimizes overall performance on the test set), the distilled model makes 109 errors
+of which 14 are on 3s*. So with the right `bias`, the distilled model gets 98.6% of the test 3s correct
+despite never having seen a 3 during training. If the transfer set contains only the 7s and 8s from the
+training set, the distilled model makes 47.3% test errors, but when the `bias`es for 7 and 8 are reduced
+by 7.6 to optimize test performance, this falls to 13.2% test errors**
+```python
+model.fc.bias.data[3] += 3.5
+```
+### Soft-Targets as Regularizers
+* One of our main claims about using soft targets instead of hard targets is that a lot of helpful infor
+nation can be carried in soft targets that could not possibly be encoded with a single hard target.
+![image](https://github.com/user-attachments/assets/f612331c-257d-4235-b287-a7afb423adff)
 
 ---
 # Contribution guidelines
