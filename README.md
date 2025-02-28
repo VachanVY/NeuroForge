@@ -1,4 +1,4 @@
-# Contents
+![image](https://github.com/user-attachments/assets/b6106d21-53c7-463b-9eeb-5ab0f462b23e)# Contents
 * [Neural Networks](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#neural-networks) => [*nn.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/nn.ipynb)
   * [Logistic Regression](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
   * [MLP](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
@@ -17,6 +17,7 @@
   * [Adam](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
   * [AdamW](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
 * [Model Distillation](https://github.com/VachanVY/NeuroForge/tree/main?tab=readme-ov-file#model-distillation-paper-reference) => [*distillation.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/distillation.ipynb)
+* [Mixture-Of-Experts (MoE) Layers]()
 
 # Neural Networks
 ## Aim of this repo
@@ -300,6 +301,68 @@ model.fc.bias.data[3] += 3.5
 * One of our main claims about using soft targets instead of hard targets is that a lot of helpful infor
 nation can be carried in soft targets that could not possibly be encoded with a single hard target.
 ![image](https://github.com/user-attachments/assets/f612331c-257d-4235-b287-a7afb423adff)
+
+# Mixture-of-Experts (MoE) layer
+* The capacity of a neural network to absorb information is limited by its number of
+parameters. Conditional computation, where parts of the network are active on a
+per-example basis, has been proposed in theory as a way of dramatically increasing
+model capacity without a proportional increase in computation. there are significant algorithmic and performance challenges
+* In this work, we address these challenges and finally realize the promise of conditional
+computation, achieving greater than 1000x improvements in model capacity with
+only minor losses in computational efficiency on modern GPU clusters.
+* *We introduce a Sparsely-Gated Mixture-of-Experts layer (MoE), consisting of up to
+thousands of feed-forward sub-networks. A trainable gating network determines
+a sparse combination of these experts to use for each example*
+### Introduction
+* For typical deep learning models, where the entire model is activated for every example, this leads to
+a roughly quadratic blow-up in training costs, as both the model size and the number of training
+examples increase
+* Various forms of conditional computation have been proposed as a way to increase model capacity
+without a proportional increase in computational costs, in these schemes, large parts of a network are active or inactive on a per-example
+basis. ***The gating decisions may be binary or sparse and continuous, stochastic or deterministic***.
+Various forms of reinforcement learning and back-propagation are proposed for trarining the gating
+decisions
+## THE SPARSELY-GATED MIXTURE-OF-EXPERTS LAYER
+* ![image](https://github.com/user-attachments/assets/30571061-6bfc-4e1e-ade9-bda358091698)
+* A Sparsely-Gated Mixture-of-Experts Layer (MoE). The MoE consists of a number
+of experts, each a simple feed-forward neural network, and a trainable gating network which
+selects a sparse combination of the experts to process each input (see Figure 1). All parts of the
+network are trained jointly by back-propagation
+* ![image](https://github.com/user-attachments/assets/c6c5cd6b-557e-45e2-9f58-ae196249e033)
+> ***In MoE, whenever the gated value function returns 0, we need not compute that particular function, but it's parameters are in memory, so we are saving computation power not memory***
+### Gating Network
+* ![image](https://github.com/user-attachments/assets/6b054f69-0e64-4d40-ab01-e0631dc751cf)
+* ![image](https://github.com/user-attachments/assets/9e28eb58-f315-46f8-8150-c025c8270563)
+## ADDRESSING PERFORMANCE CHALLENGES
+### 
+* If the gating network chooses $k$ out of
+$n$ experts for each example, then for a batch of $b$ examples, each expert receives a much smaller
+batch of approximately $kb/n << b$ examples. This causes a naive MoE implementation to become
+very inefficient as the number of experts increases. The solution to this shrinking batch problem is
+to make the original batch size as large as possible. However, batch size tends to be limited by the
+memory necessary to store activations between the forwards and backwards passes. We propose the
+following techniques for increasing the batch size:
+  * (i) **Mixing Data Parallelism and Model Parallelism**:
+    ![image](https://github.com/user-attachments/assets/84eb8589-4418-41c1-bbd5-ca29a018ae4c)
+    In the case of a hierarchical MoE (Section B), the primary gating network employs data parallelism,
+    and the secondary MoEs employ model parallelism. Each secondary MoE resides on one device
+    ![image](https://github.com/user-attachments/assets/f78aaa29-2f0a-439e-8d02-5df92f161940)
+  * (ii) **Taking Advantage of Convolutionality**:
+    In our language models (*RNNs not Transformers* (invented later in late 2017)), we apply the same MoE to each
+    time step of the previous layer. If we wait for the previous layer to finish, we can apply the MoE
+    to all the time steps together as one big batch. Doing so increases the size of the input batch to the
+    MoE layer by a factor of the number of unrolled time steps
+  * (iii) **Increasing Batch Size for a Recurrent MoE**:
+    We suspect that even more powerful models may
+    involve applying a MoE recurrently. For example, the weight matrices of a LSTM or other RNN
+    could be replaced by a MoE. Sadly, such models break the convolutional trick from the last paragraph,
+    since the input to the MoE at one timestep depends on the output of the MoE at the previous
+    timestep. Gruslys et al. (2016) describe a technique for drastically reducing the number of stored
+    activations in an unrolled RNN, at the cost of recomputing forward activations. This would allow
+    for a large increase in batch size
+
+
+
 
 ---
 # Contribution guidelines
