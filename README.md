@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/b6106d21-53c7-463b-9eeb-5ab0f462b23e)# Contents
+# Contents
 * [Neural Networks](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#neural-networks) => [*nn.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/nn.ipynb)
   * [Logistic Regression](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
   * [MLP](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
@@ -334,7 +334,6 @@ network are trained jointly by back-propagation
 * ![image](https://github.com/user-attachments/assets/6b054f69-0e64-4d40-ab01-e0631dc751cf)
 * ![image](https://github.com/user-attachments/assets/9e28eb58-f315-46f8-8150-c025c8270563)
 ## ADDRESSING PERFORMANCE CHALLENGES
-### 
 * If the gating network chooses $k$ out of
 $n$ experts for each example, then for a batch of $b$ examples, each expert receives a much smaller
 batch of approximately $kb/n << b$ examples. This causes a naive MoE implementation to become
@@ -360,8 +359,14 @@ following techniques for increasing the batch size:
     timestep. Gruslys et al. (2016) describe a technique for drastically reducing the number of stored
     activations in an unrolled RNN, at the cost of recomputing forward activations. This would allow
     for a large increase in batch size
-
-
+### Balancing Expert Utilization
+* ![image](https://github.com/user-attachments/assets/fe0483b3-9291-4f69-9d42-3c8cc0033ae5)
+* ![image](https://github.com/user-attachments/assets/f4edee51-2dde-4413-a3f7-a21b67a3b1f0)
+* ![image](https://github.com/user-attachments/assets/b1875829-987a-4e60-9629-bb7ca69492a5)\
+  $Load(x)$ => Probability of Selection $P(x, i)$: $G(x)$ is nonzero for expert $i$ if and only if the gating score $H(x)_i$ (raw gating output before thresholding) is greater than the 
+$k^{\text{th}}$ -greatest score among all other experts
+* $Φ$ is the CDF (Gaussian cumulative distribution function) of the standard normal distribution
+ 
 
 
 ---
