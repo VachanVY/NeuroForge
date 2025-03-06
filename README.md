@@ -17,7 +17,7 @@
   * [Adam](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
   * [AdamW](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
 * [Model Distillation](https://github.com/VachanVY/NeuroForge/tree/main?tab=readme-ov-file#model-distillation-paper-reference) => [*distillation.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/distillation.ipynb)
-* [Mixture-Of-Experts (MoE) Layers]()
+* [Mixture-Of-Experts (MoE) Layers](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#mixture-of-experts-moe-layer)
 
 # Neural Networks
 ## Aim of this repo
