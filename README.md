@@ -383,3 +383,57 @@ $k^{\text{th}}$ -greatest score among all other experts
 # For Further Studies
 * [**Video**: Neural Networks: Zero to Hero](https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ)
 * [**Book**: Deep Learning by Ian Goodfellow](https://www.deeplearningbook.org/)
+
+---
+
+# [Karpathy's blog "A Recipe for Training Neural Networks" snippets](https://karpathy.github.io/2019/04/25/recipe/)
+* I have developed a specific process for myself that I follow when applying a neural net to a new problem, which I will try to describe. You will see that it takes the two principles above very seriously. 
+In particular, it builds from simple to complex and at every step of the way we make concrete hypotheses about what will happen 
+and then either validate them with an experiment or investigate until we find some issue
+
+## Become one with the data
+* I like to spend copious amounts of time (measured in units of hours) scanning through thousands of examples, understanding
+their distribution and looking for patterns
+* duplicates, corrupted images/labels, does spatial position matter or do we want to average pool it out?
+* Also, since the neural net is effectively a compressed/compiled version of your dataset, you’ll be able to look at your network (mis)predictions and understand where they might be coming from. And if your network is giving you some prediction that doesn’t seem consistent with what you’ve seen in the data, something is off
+
+## Set up the end-to-end training/evaluation skeleton + get dumb baselines
+* Our next step is to set up a full training + evaluation skeleton and gain trust in its correctness via a series of experiments
+*  At this stage it is best to pick some simple model that you couldn’t possibly have screwed up somehow - e.g. a linear classifier, or a very tiny ConvNet. We’ll want to train it, visualize the losses, any other metrics (e.g. accuracy), model predictions, and perform a series of ablation experiments with explicit hypotheses along the way
+### Tips & tricks for this stage:
+* **Fix random seed**
+* **Simplify**: Make sure to disable any unnecessary fanciness. As an example, definitely turn off any data augmentation at this stage. Data augmentation is a regularization strategy that we may incorporate later, but for now, it is just another opportunity to introduce some dumb bug
+* **Add significant digits to your eval**: *When plotting the test loss run the evaluation over the entire (large) test set*. Do not just plot test losses over batches and then rely on smoothing them in Tensorboard. We are in pursuit of correctness and are very willing to give up time to stay sane
+* **Verify loss @ init**
+* **Init well**: Eg => If you have an imbalanced dataset of a ratio of 1:10 of positives:negatives, set the bias on your logits such that your network predicts a probability of 0.1 at initialization. Setting these correctly will speed up convergence and eliminate “hockey stick” loss curves where in the first few iterations your network is basically just learning the bias
+* **Human baseline**: Monitor metrics other than loss that are human interpretable and checkable (e.g. accuracy). Whenever possible evaluate your own (human) accuracy and compare to it. Alternatively, annotate the test data twice and for each example treat one annotation as prediction and the second as ground truth
+* **Input-indepent baseline**: Train an input-independent baseline, (e.g. easiest is to just set all your inputs to zero). This should perform worse than when you actually plug in your data without zeroing it out. Does it? i.e. does your model learn to extract any information out of the input at all?
+* **Overfit one batch**: Overfit a single batch of only a few examples (e.g. as little as two). To do so we increase the capacity of our model (e.g. add layers or filters) and verify that we can reach the lowest achievable loss (e.g. zero). Then I also like to visualize in the same plot both the label and the prediction and ensure that they end up aligning perfectly once we reach the minimum loss. If they do not, there is a bug somewhere and we cannot continue to the next stage.
+* **Verify decreasing training loss**: At this stage you will hopefully be underfitting on your dataset because you’re working with a toy model. Try to increase its capacity just a bit. Did your training loss go down as it should?
+* **Visualize prediction dynamics**: I like to visualize model predictions on a fixed test batch during the course of training. The “dynamics” of how these predictions move will give you incredibly good intuition for how the training progresses
+* **Use backprop to chart dependencies**: Your deep learning code will often contain complicated, vectorized, and broadcasted operations. A relatively common bug I’ve come across a few times is that people get this wrong (e.g. they use view instead of transpose/permute somewhere) and inadvertently mix information across the batch dimension. It is a depressing fact that your network will typically still train okay because it will learn to ignore data from the other examples. One way to debug this (and other related problems) is to set the loss to be something trivial like the sum of all outputs of example i, run the backward pass all the way to the input, and ensure that you get a non-zero gradient only on the i-th input. The same strategy can be used to e.g. ensure that your autoregressive model at time t only depends on 1..t-1. More generally, gradients give you information about what depends on what in your network, which can be useful for debugging.
+* **Generalize a special case**: I like to write a very specific function to what I’m doing right now, get that to work, and then generalize it later making sure that I get the same result
+
+## Overfit
+* **At this stage we should have a good understanding of the dataset and we have the full training + evaluation pipeline working**: For any given model we can (reproducibly) compute a metric that we trust. We are also armed with our performance for an input-independent baseline, the performance of a few dumb baselines (we better beat these), and we have a rough sense of the performance of a human (we hope to reach this). The stage is now set for iterating on a good model
+* **The approach I like to take to finding a good model has two stages**: first get a model large enough that it can overfit (i.e. focus on training loss) and then regularize it appropriately (give up some training loss to improve the validation loss)
+  The reason I like these two stages is that if we are not able to reach a low error rate with any model at all that may again indicate some issues, bugs, or misconfiguration
+## A few tips & tricks for this stage:
+* **Picking the model**: *Don't be a Hero* E.g. if you are classifying images don’t be a hero and just copy paste a ResNet-50 for your first run. You’re allowed to do something more custom later and beat this.
+* **Complexify only one at a time**: If you have multiple signals to plug into your classifier I would advise that you plug them in one by one and every time ensure that you get a performance boost you’d expect. Don’t throw the kitchen sink at your model at the start. There are other ways of building up complexity - e.g. you can try to plug in smaller images first and make them bigger later, etc.
+* **Adam is safe**. In the early stages of setting baselines I like to use Adam with a learning rate of 3e-4
+* **Do not trust learning rate decay defaults**
+
+## Regularize
+* **Get more Data**: First, the by far best and preferred way to regularize a model in any practical setting is to add more real training data. It is a very common mistake to spend a lot engineering cycles trying to squeeze juice out of a small dataset when you could instead be collecting more data. As far as I’m aware adding more data is pretty much the only guaranteed way to monotonically improve the performance of a well-configured neural network almost indefinitely. The other would be ensembles (if you can afford them), but that tops out after ~5 models
+* **Data augmentation and creative augmentation**:
+* **Pretrain**: It rarely ever hurts to use a pretrained network if you can, even if you have enough data
+* **Decrease the batch size**: Due to the normalization inside batch norm smaller batch sizes somewhat correspond to stronger regularization. This is because the batch empirical mean/std are more approximate versions of the full mean/std so the scale & offset “wiggles” your batch around more.
+* **Add dropout**
+* **Weight decay**: Increase the weight decay penalty
+* **Early stopping**: 
+
+## Squeeze out the juice
+* **Ensembles**: Model ensembles are a pretty much guaranteed way to gain 2% of accuracy on anything. If you can’t afford the computation at test time look into distilling your ensemble into a network using dark knowledge.
+* **Leave it training**: I’ve often seen people tempted to stop the model training when the validation loss seems to be leveling off. In my experience networks keep training for unintuitively long time. One time I accidentally left a model training during the winter break and when I got back in January it was SOTA (“state of the art”).
+
