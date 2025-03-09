@@ -366,7 +366,8 @@ following techniques for increasing the batch size:
   $Load(x)$ => Probability of Selection $P(x, i)$: $G(x)$ is nonzero for expert $i$ if and only if the gating score $H(x)_i$ (raw gating output before thresholding) is greater than the 
 $k^{\text{th}}$ -greatest score among all other experts
 * $Φ$ is the CDF (Gaussian cumulative distribution function) of the standard normal distribution
- 
+* Let's break down the Load Balancing Loss:
+  we have to minimize $L_{load} (X)$, so we have to minimize $CV(Load(X))$, hence, we have to reduce the standard deviation of Load, which means most values are centred around the mean, forcing most values to be near the mean, same for $L_{importance}$
 
 
 ---
