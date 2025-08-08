@@ -16,7 +16,7 @@ from functional import (
     cross_entropy_forward, cross_entropy_backward,
 )
 
-# siiilllly
+# Siiilllly
 _sqrt = lambda x: x**0.5
 _prod = lambda x: x[0]*x[1]
 
@@ -29,6 +29,15 @@ class Module:
         raise NotImplementedError
     def __call__(self, *args, **kwargs):
         return self.forward(*args, **kwargs)
+
+    def to(self, device):
+        for attr_name in dir(self):
+            attr = getattr(self, attr_name)
+            if isinstance(attr, Tensor):
+                setattr(self, attr_name, attr.to(device))
+            elif isinstance(attr, Module):
+                attr.to(device)
+        return self
     
 
 # Layers
@@ -51,7 +60,9 @@ class Reshape(Module):
         self.shape = shape
 
     def forward(self, x:Tensor):
-        self.x_shape = x.shape; return reshape_forward(x, self.shape)
+        self.x_shape = x.shape
+        reshaped, _ = reshape_forward(x, self.shape)
+        return reshaped
     def backward(self, dL_dO:Tensor):
         return reshape_backward(dL_dO, self.x_shape)
     
@@ -63,10 +74,11 @@ class Conv2d(Module):
         out_channels:FAN_OUT,
         kernel_size:KERNEL_SIZE,
         strides:STRIDES,
+        bias:bool=True
     ):
         bound = _sqrt(2/_prod(kernel_size))
-        self.wei = torch.empty(size=(out_channels, in_channels, kernel_size)).uniform_(-bound, bound)
-        self.bias = torch.zeros(size=kernel_size[0])
+        self.wei = torch.empty(size=(out_channels, in_channels, *kernel_size)).uniform_(-bound, bound)
+        self.bias = torch.zeros(size=(out_channels,)) if bias else None
         self.strides = strides
 
     def forward(self, x:Tensor):
@@ -89,7 +101,6 @@ class Maxpool2d(Module):
     
 
 # Activations
-
 class ReLU(Module):
     def forward(self, x:Tensor):
         self.relu = relu_forward(x)
@@ -108,7 +119,6 @@ class Softmax(Module):
         return softmax_backward(self.probs, dL_dO)
 
 # Losses
-
 class CrossEntropy:
     def forward(self, y_true:Tensor, y_proba:Tensor):
         self.y_true = y_true
@@ -116,3 +126,7 @@ class CrossEntropy:
         return cross_entropy_forward(y_true, y_proba)
     def backward(self):
         return cross_entropy_backward(self.y_true, self.y_proba)
+    
+
+if __name__ == "__main__":
+    ...

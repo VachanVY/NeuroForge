@@ -1,8 +1,7 @@
 import typing as tp
 
 import torch
-from torch import Tensor, _assert
-from torch.nn import functional as F
+from torch import Tensor
 
 FAN_IN:tp.TypeAlias = int
 FAN_OUT:tp.TypeAlias = int
@@ -36,7 +35,8 @@ def reshape_forward(x:Tensor, shape:tuple): # (B, C, H, W)
 def reshape_backward(dL_dO:Tensor, x_shape:torch.Size): # (B, C*H*W)
     return dL_dO.reshape(x_shape)                       # (B, C, H, W)
 
-
+# I'm not a dummy, just using torch's functional, instead of writing my own primitive conv
+from torch.nn import functional as F
 def _conv2d(
     x:Tensor, # (H, W)
     w:Tensor, # (h, w)
@@ -61,7 +61,7 @@ def _conv2d(
 def _dilate_matrix(x:Tensor, dilation:tuple[int, int]):
     """`x: shape(B, C, H, W)`\n `dilation:tuple`"""
     (B, C, H, W), (Hd, Wd)  = x.shape, dilation
-    dilated = torch.zeros((B, C, Hd*(H-1)+1, Wd*(W-1)+1 ))
+    dilated = torch.zeros((B, C, Hd*(H-1)+1, Wd*(W-1)+1 ), device=x.device, dtype=x.dtype)
     dilated[:, :, ::Hd, ::Wd] = x
     return dilated
 
@@ -78,18 +78,19 @@ def conv2d_forward(
     assert C == fi, f"Expected {C} == {fi}"
     assert H >= h, f"Expected {H} >= {h}"
     assert W >= w, f"Expected {W} >= {w}"
-    assert bias.shape[0] == fo, f"Expected {bias.shape[0]} == {fo}"
+    if bias is not None:
+        assert bias.shape[0] == fo, f"Expected {bias.shape[0]} == {fo}"
 
     output_shape = (B, fo, int((H-h)//sh + 1), int((W-w)//sw + 1))
-    O = torch.zeros(output_shape) # (B, C_out, H1, W1)
+    out = torch.zeros(output_shape, device=x.device, dtype=x.dtype) # (B, C_out, H1, W1)
     for fan_out in range(fo):
         for fan_in in range(fi):
             for bdim in range(B):
-                O[bdim, fan_out] += _conv2d(x[bdim, fan_in], wie[fan_out, fan_in])[::sh, ::sw]
+                out[bdim, fan_out] += _conv2d(x[bdim, fan_in], wie[fan_out, fan_in])[::sh, ::sw]
 
     if bias is not None:
-        O += bias.view(1, -1, 1, 1)
-    return O
+        out += bias.view(1, -1, 1, 1)
+    return out
 
 
 def conv2d_backward(
@@ -125,7 +126,7 @@ def _maxpool(matrix:Tensor, kernel_size:KERNEL_SIZE, strides:STRIDES): # (H, W)
                 max_index_global = (max_index[0] + i, max_index[1] + j)
                 indices.append(max_index_global)
                 maxpooled.append(window[max_index])
-        maxpooled = torch.tensor(maxpooled).reshape(output_shape)
+        maxpooled = torch.stack(maxpooled).reshape(output_shape)
         indices = torch.tensor(indices) # (H1*W1, 2)
         # (H1, W1), ((H1, W1), (H1, W1))
         return maxpooled, (indices[:, 0].reshape(output_shape), indices[:, 1].reshape(output_shape))
@@ -186,13 +187,11 @@ def maxpool2d_backward(
 
 
 def relu_forward(x:Tensor):
-    return torch.maximum(x, torch.tensor(0))
+    return torch.maximum(x, torch.zeros((), dtype=x.dtype, device=x.device))
 
 
 def relu_backward(relu:Tensor, dL_dO:Tensor):
-    dO_dx = relu * dL_dO
-    dL_dx = dL_dO * dO_dx
-    return dL_dx
+    return dL_dO * (relu > 0).to(relu.dtype)
 
 
 def softmax_forward(logits:Tensor):
@@ -205,7 +204,7 @@ def softmax_forward(logits:Tensor):
 def softmax_backward(probs:Tensor, dL_dprobs:Tensor):
     nc = probs.shape[-1]
     t1 = torch.einsum("ij,ik->ijk", probs, probs) # (B, nc, nc)
-    t2 = torch.einsum("ij,jk->ijk", probs, torch.eye(nc, nc)) # (B, nc, nc)
+    t2 = torch.einsum("ij,jk->ijk", probs, torch.eye(nc, nc, device=probs.device, dtype=probs.dtype)) # (B, nc, nc)
     dprobs_dlogits = t2 - t1 # (B, nc, nc)
 
     dL_dlogits = (dL_dprobs[:, None, :] @ dprobs_dlogits)[:, 0, :] # ((B, 1, nc) @ (B, nc, nc))[:, 0, :]
@@ -227,3 +226,7 @@ def cross_entropy_backward(y_true:Tensor, y_proba:Tensor):
     dL_dprobas = dL_dlogprobas * dlogprobas_dprobas # (B, nc)
     return dL_dprobas # (B, nc)
 
+
+if __name__ == "__main__":
+    from tests import run_all
+    run_all()

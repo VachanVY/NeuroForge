@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "Test: pytest",
+			"command": "pytest",
+			"args": [],
+			"group": "test",
+			"isBackground": false,
+			"problemMatcher": [
+				"$pytest-stylish"
+			]
+		}
+	]
+}
