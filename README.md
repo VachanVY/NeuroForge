@@ -13,8 +13,9 @@
   * [Comparision](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#comparision)
 * [Dropout: **Why When Where & How?**](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#dropout-paper-deep-learning-book) => [*dropout.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/dropout.ipynb), [*dropout_scale.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/dropout_scale.ipynb)
   * [Comparision before and after scaling the model](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#comparision-1) => [*dropout_scale.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/dropout_scale.ipynb), [nn_scale.ipynb](https://github.com/VachanVY/NeuroForge/blob/main/nn_scale.ipynb)
-* [LeNet: Convolutional Neural Networks from scratch]() => [*train_lenet.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/train_lenet.ipynb)
-  * ...
+* [LeNet: Convolutional Neural Networks from scratch](https://github.com/VachanVY/NeuroForge/tree/main?tab=readme-ov-file#lenet-convolutional-neural-networks-from-scratch) => [*train_lenet.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/train_lenet.ipynb)
+  * [Basics of Convolutional Operator](https://github.com/VachanVY/NeuroForge/tree/main?tab=readme-ov-file#lenet-convolutional-neural-networks-from-scratch)
+  * [LeNet from scratch: Forward Propagation and Bachward Propagation derived on paper and coded](https://github.com/VachanVY/NeuroForge/tree/main#:~:text=My%20notes%20for%20LeNet%20forward%20propagation%20and%20backwards%20propagation)
 * [Adam and AdamW](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
   * [Adam](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
   * [AdamW](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
