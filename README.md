@@ -146,6 +146,8 @@ We want to increase the probabilities of the true classes, therefore we minimize
 Train Accuracy:      0.9969 | Train Loss: 0.0187 |
 Validation Accuracy: 0.9794 | Validation Loss: 0.0665 |
 ```
+<img width="567" height="455" alt="image" src="https://github.com/user-attachments/assets/b92dac58-285f-45ae-9d49-0bd7cb8adcdd" />
+
 * See the notebook to see predictions
 
 # Batch-Normalization and Layer-Normalization
@@ -214,10 +216,10 @@ Now the term in the exp (don't take the bias) is the expectation of ![alt text](
 * Without Scaling Model\
   ![alt text](images/image-33.png) ![alt text](images/image-34.png)
 * After Scaling Model\
-  ![alt text](image.png) ![alt text](images/image-36.png)
-  * In `nn_scale.ipynb` validation loss starts increasing...
+  <img width="872" height="752" alt="image" src="https://github.com/user-attachments/assets/9621d3c5-0d04-4c60-83e8-a358912ac9bd" />  ![alt text](images/image-36.png)
+  * In `nn_scale.ipynb`, validation loss starts increasing...
     Now see `dropput_scale.ipynb`, the gap between training and validation metrics is lesser than in `nn_scale.ipynb`
-  * Validation metrics has improved but at the cost of training metrics
+  * Validation metrics have improved, but at the cost of training metrics
 * See the notebooks for the train logs
 
 # LeNet: Convolutional Neural Networks from scratch
@@ -240,6 +242,12 @@ Now the term in the exp (don't take the bias) is the expectation of ![alt text](
   <img width="884" height="1381" alt="image" src="https://github.com/user-attachments/assets/d3497508-567c-4453-860f-8897bc02cdb2" />
 </details>
 
+* Not yet fully converged, takes a lot of time to train as the code is not optimized (if you train it for some reason, send a Pull request)
+
+<img width="629" height="492" alt="image" src="https://github.com/user-attachments/assets/16db8ece-6a60-4339-b187-e935fab9f5c3" />
+
+<img width="630" height="492" alt="image" src="https://github.com/user-attachments/assets/6de62384-3473-4c05-96a5-bff6c7aba334" />
+
 
 # Adam and AdamW (Adam with weight decay) Optimizers
 ## Adam
@@ -248,7 +256,7 @@ Now the term in the exp (don't take the bias) is the expectation of ![alt text](
 ## AdamW
 * What's weight decay?\
   ![alt text](images/image-12.png)
-* Paper Implementaion
+* Paper Implementation
  ![alt text](images/image-9.png)
 * L2 regularization and weight decay regularization are equivalent for standard stochastic gradient descent (when rescaled by the learning rate), but as we demonstrate this is not the case for adaptive gradient algorithms, such as Adam
 * Common implementations of these algorithms employ L2 regularization (often calling it “weight decay” in what may be misleading due to the inequivalence we expose). For example see the pytorch implementation of Adam (which is wrong) below
