@@ -13,6 +13,8 @@
   * [Comparision](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#comparision)
 * [Dropout: **Why When Where & How?**](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#dropout-paper-deep-learning-book) => [*dropout.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/dropout.ipynb), [*dropout_scale.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/dropout_scale.ipynb)
   * [Comparision before and after scaling the model](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#comparision-1) => [*dropout_scale.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/dropout_scale.ipynb), [nn_scale.ipynb](https://github.com/VachanVY/NeuroForge/blob/main/nn_scale.ipynb)
+* [LeNet: Convolutional Neural Networks from scratch]() => [*train_lenet.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/train_lenet.ipynb)
+  * ...
 * [Adam and AdamW](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
   * [Adam](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
   * [AdamW](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam-and-adamw-adam-with-weight-decay-optimizers)
@@ -216,6 +218,27 @@ Now the term in the exp (don't take the bias) is the expectation of ![alt text](
     Now see `dropput_scale.ipynb`, the gap between training and validation metrics is lesser than in `nn_scale.ipynb`
   * Validation metrics has improved but at the cost of training metrics
 * See the notebooks for the train logs
+
+# LeNet: Convolutional Neural Networks from scratch
+* <img width="1280" height="731" alt="image" src="https://github.com/user-attachments/assets/42579e7d-5df2-4589-9c19-f1f146e4846e" />
+* <img width="1280" height="804" alt="image" src="https://github.com/user-attachments/assets/9396747f-f8ae-4f94-8fad-018592acd509" />
+<details>
+  <summary>My notes for LeNet forward propagation and backwards propagation</summary>
+  <img width="784" height="1280" alt="image" src="https://github.com/user-attachments/assets/c5a0b10f-4b63-4442-b3f0-f13d07e50b74" />
+  <img width="1161" height="1280" alt="image" src="https://github.com/user-attachments/assets/34cb83bd-0ccd-4b43-9872-b930aabf173d" />
+  <img width="841" height="1280" alt="image" src="https://github.com/user-attachments/assets/fe4fadcb-abaf-4dfa-9d10-08db785cb2ef" />
+  <img width="780" height="1280" alt="image" src="https://github.com/user-attachments/assets/565c10a6-5a36-47ba-932f-2fefe1cf1781" />
+  <img width="821" height="1280" alt="image" src="https://github.com/user-attachments/assets/45e8625f-58a9-4614-ab72-a124ed1e64ba" />
+  <img width="1009" height="1504" alt="image" src="https://github.com/user-attachments/assets/2013789f-43e5-408d-afd4-5c847ebd400d" />
+  <img width="989" height="1600" alt="image" src="https://github.com/user-attachments/assets/e0aaf750-8515-4d8b-a68a-f14ea10828f3" />
+  <img width="1478" height="1600" alt="image" src="https://github.com/user-attachments/assets/fbe7acec-3f81-4560-ad06-0523294d939b" />
+  <img width="958" height="1411" alt="image" src="https://github.com/user-attachments/assets/682520ea-d5b6-4a0c-818e-7d81b921d100" />
+  <img width="907" height="1340" alt="image" src="https://github.com/user-attachments/assets/69d2f907-a29f-4cc5-bae8-8beb709d10a3" />
+  <img width="1017" height="1521" alt="image" src="https://github.com/user-attachments/assets/0bbecdea-fad6-4a3f-ad59-066faeff4033" />
+  <img width="927" height="1377" alt="image" src="https://github.com/user-attachments/assets/311bc563-d107-4dee-91ef-56ed5c852fca" />
+  <img width="884" height="1381" alt="image" src="https://github.com/user-attachments/assets/d3497508-567c-4453-860f-8897bc02cdb2" />
+</details>
+
 
 # Adam and AdamW (Adam with weight decay) Optimizers
 ## Adam
