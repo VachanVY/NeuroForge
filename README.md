@@ -121,6 +121,15 @@ We want to increase the probabilities of the true classes, therefore we minimize
     for i in range(len(params)):
         params[i] = params[i] - lr*grads[i]
     ```
+* 
+  <img width="400" alt="image" src="https://github.com/user-attachments/assets/051282ac-a969-4c08-aae9-76a51f4969cd" />
+  <img width="400" alt="image" src="https://github.com/user-attachments/assets/e643a6aa-e679-4f96-b833-d067456284e0" />
+  <img width="400" alt="image" src="https://github.com/user-attachments/assets/56f0b0e0-b740-458b-8672-61f2bd503a37" />
+  <img width="400" alt="image" src="https://github.com/user-attachments/assets/a8c83dc9-3e9f-4536-962f-0b24f3f0f050" />
+  <img width="400" alt="image" src="https://github.com/user-attachments/assets/af5b4664-538a-409e-bcb7-5649ef78788f" />
+
+
+
 * Additional Note: Neural Network optimization is a non-convex optimization problem\
   ![image](https://github.com/user-attachments/assets/9e6134d5-8822-401a-894a-98dda3be8eb4)
 
