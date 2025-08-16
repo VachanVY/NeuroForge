@@ -12,6 +12,10 @@ These up and down oscillations slow down gradient descent, preventing the use of
 * Adaptive Learning Rate
  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1ca8b59b-7b41-457d-bea9-53f080954a01" />
  <img width="1599" height="1000" alt="image" src="https://github.com/user-attachments/assets/b016c0c5-3020-4c09-b10c-92910bb4cc1a" />
+ <details>
+  <summary> Difference Between RMSProp and AdaGrad (ChatGpt) </summary>
+  <img width="894" height="1024" alt="image" src="https://github.com/user-attachments/assets/1035d364-177d-4d93-a9ac-228d75ed63b4" />
+ </details>
  
 ---
 
