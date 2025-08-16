@@ -1,4 +1,4 @@
-# Neural Network Optimisation
+# Neural Network Optimization
 * <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d4e66c8d-ee41-403a-a7ce-add3a707b2e3" />
 * <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9a192232-04cc-4467-8b51-52af23c558eb" />
 ---
@@ -22,6 +22,7 @@ These up and down oscillations slow down gradient descent, preventing the use of
 
 
 ---
-<img width="871" height="439" alt="image" src="https://github.com/user-attachments/assets/340396ac-7f02-4fa4-ac69-ce1b76fa7f08" />
+# Additional Notes on Neural Network Optimization
+* <img width="871" height="439" alt="image" src="https://github.com/user-attachments/assets/340396ac-7f02-4fa4-ac69-ce1b76fa7f08" />
 
 ---
