@@ -5,3 +5,4 @@ data
 temp*
 delete
 __pycache__
+_*
