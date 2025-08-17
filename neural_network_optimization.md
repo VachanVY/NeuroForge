@@ -16,6 +16,16 @@ These up and down oscillations slow down gradient descent, preventing the use of
   <summary> Difference Between RMSProp and AdaGrad (ChatGpt) </summary>
   <img width="894" height="1024" alt="image" src="https://github.com/user-attachments/assets/1035d364-177d-4d93-a9ac-228d75ed63b4" />
  </details>
+
+---
+
+ * Nestrov accelerated gradient
+   <img width="940" height="651" alt="Screenshot from 2025-08-17 18-15-34" src="https://github.com/user-attachments/assets/e3a988f8-2faf-43be-a6f0-4abcce9e4fd3" />
+   
+   <img width="701" height="222" alt="image" src="https://github.com/user-attachments/assets/6672e6ea-b438-48e2-b0b1-207ca9dc4b24" />
+   
+   <img width="620" height="656" alt="image" src="https://github.com/user-attachments/assets/7bf5dc27-10e2-4038-ab30-d567493e4a5d" />
+
  
 ---
 
@@ -24,9 +34,24 @@ These up and down oscillations slow down gradient descent, preventing the use of
 
 ---
 
+## Second-order methods
+* 
 
 ---
-# Additional Notes on Neural Network Optimization
+
+## My notes on ["Deriving Muon"](https://jeremybernste.in/writing/deriving-muon)
+* 
+
+
+---
+## Additional Notes on Neural Network Optimization
 * <img width="871" height="439" alt="image" src="https://github.com/user-attachments/assets/340396ac-7f02-4fa4-ac69-ce1b76fa7f08" />
 
 ---
+
+## References
+* ["An overview of gradient descent optimization algorithms"](https://arxiv.org/pdf/1609.04747)
+* ["https://cs231n.github.io/neural-networks-3"](https://cs231n.github.io/neural-networks-3)
+* ["An updated overview of recent gradient descent algorithms"](https://johnchenresearch.github.io/demon)
+* ["deriving-muon"](https://jeremybernste.in/writing/deriving-muon)
+* ["Muon: An optimizer for hidden layers in neural networks" by Keller Jordan](https://kellerjordan.github.io/posts/muon/)
