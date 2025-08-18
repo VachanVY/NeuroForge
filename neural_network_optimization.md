@@ -69,6 +69,20 @@ These up and down oscillations slow down gradient descent, preventing the use of
    <img width="509" height="770" alt="image" src="https://github.com/user-attachments/assets/a25e4a42-c0ca-4a08-9036-16317840b293" />
   </details>
 
+## Experiments
+* lr = 0.001 for all. Low for SGD and SGDMomentum. 
+  <img width="1012" height="701" alt="image" src="https://github.com/user-attachments/assets/af5a6005-fc22-4ac9-8f30-cb1ba006de24" />
+
+  Let's increase lr for all
+* lr = 0.01 for all. That's a lot for RMSProp and Adam.
+  <img width="1012" height="701" alt="image" src="https://github.com/user-attachments/assets/4aa7baa9-7e58-4958-8ab4-60a28722231c" />
+
+  Let's increase more for SGD and decrease for RMSProp and Adam
+* So, yes, different lr is optimal for different optimizers
+  <img width="1012" height="701" alt="image" src="https://github.com/user-attachments/assets/06f70b21-48c2-45d0-95b8-8c1f716b5d8b" />
+
+
+
 
 
 
