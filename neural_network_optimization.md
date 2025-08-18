@@ -42,17 +42,32 @@ These up and down oscillations slow down gradient descent, preventing the use of
 ---
 
 ## [Muon: An optimizer for hidden layers in neural networks](https://kellerjordan.github.io/posts/muon)
+* <details>
+    <summary> SVD review </summary>
+    <img width="1521" height="1032" alt="image" src="https://github.com/user-attachments/assets/d5a57c38-2972-48f4-90af-05e2e4731280" />
+  </details>
 * <img width="926" height="589" alt="image" src="https://github.com/user-attachments/assets/9533862a-b624-48a8-90d7-53174cef513e" />
+* Instead of applying the "momentumized" gradient directly, Muon modifies it using an orthogonalization step and then uses it for weight update
+* The orthogonalization process replaces the update matrix G with its nearest orthogonal matrix, which mathematically is equivalent to replacing G with UV^T where USV^T is its SVD. This means:
+  You keep the same subspace spanned by the update (the U and V matrices)
+  But you remove the singular value scaling (the S matrix) that was causing some directions to dominate
+* The intuition is that neural networks benefit from exploring the parameter space more uniformly across different directions rather than being heavily biased toward just the strongest gradient directions. By orthogonalizing, you ensure that:
+   * Important but subtle learning directions don't get overwhelmed by dominant ones
+   * The optimization process explores the parameter space more efficiently
+   * You avoid getting stuck in narrow valleys where only a few directions matter
+* Computing SVD is expensive, so they use the Newton–Schulz iteration algorithm
+  <img width="684" height="708" alt="image" src="https://github.com/user-attachments/assets/a2273a7e-1071-4777-92fa-cc7899bfcf58" />
+  <img width="710" height="698" alt="image" src="https://github.com/user-attachments/assets/178c030e-79eb-4315-afaa-b7c79b708edd" />
+  <img width="479" height="693" alt="image" src="https://github.com/user-attachments/assets/5880fecd-005f-4401-af7d-f154ea2bd3c2" />
+
+
   <details>
-  <summary> Why orthogonalization? Intuition (ChatGpt) </summary>
-  <img width="354" height="694" alt="image" src="https://github.com/user-attachments/assets/9dede82c-184b-4c5a-b7ff-64c079d58b3c" />
- </details>
- 
-* <img width="489" height="789" alt="image" src="https://github.com/user-attachments/assets/b4fb567c-02fc-49f4-aa4a-7dde2786a417" />
- <details>
-  <summary> Why orthogonalization? Intuition (ChatGpt) </summary>
-  <img width="509" height="770" alt="image" src="https://github.com/user-attachments/assets/a25e4a42-c0ca-4a08-9036-16317840b293" />
- </details>
+  <summary> Intuition-- talking to ChatGPT </summary>
+   <img width="354" height="694" alt="image" src="https://github.com/user-attachments/assets/9dede82c-184b-4c5a-b7ff-64c079d58b3c" />
+  
+   <img width="489" height="789" alt="image" src="https://github.com/user-attachments/assets/b4fb567c-02fc-49f4-aa4a-7dde2786a417" />
+   <img width="509" height="770" alt="image" src="https://github.com/user-attachments/assets/a25e4a42-c0ca-4a08-9036-16317840b293" />
+  </details>
 
 
 
