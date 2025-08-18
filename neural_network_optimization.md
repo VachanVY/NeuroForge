@@ -39,8 +39,21 @@ These up and down oscillations slow down gradient descent, preventing the use of
 
 ---
 
-## My notes on ["Deriving Muon"](https://jeremybernste.in/writing/deriving-muon)
-* 
+## [Muon: An optimizer for hidden layers in neural networks](https://kellerjordan.github.io/posts/muon)
+* <img width="926" height="589" alt="image" src="https://github.com/user-attachments/assets/9533862a-b624-48a8-90d7-53174cef513e" />
+  <details>
+  <summary> Why orthogonalization? Intuition (ChatGpt) </summary>
+  <img width="354" height="694" alt="image" src="https://github.com/user-attachments/assets/9dede82c-184b-4c5a-b7ff-64c079d58b3c" />
+ </details>
+ 
+* <img width="489" height="789" alt="image" src="https://github.com/user-attachments/assets/b4fb567c-02fc-49f4-aa4a-7dde2786a417" />
+ <details>
+  <summary> Why orthogonalization? Intuition (ChatGpt) </summary>
+  <img width="509" height="770" alt="image" src="https://github.com/user-attachments/assets/a25e4a42-c0ca-4a08-9036-16317840b293" />
+ </details>
+
+
+
 
 
 ---
@@ -55,3 +68,4 @@ These up and down oscillations slow down gradient descent, preventing the use of
 * ["An updated overview of recent gradient descent algorithms"](https://johnchenresearch.github.io/demon)
 * ["deriving-muon"](https://jeremybernste.in/writing/deriving-muon)
 * ["Muon: An optimizer for hidden layers in neural networks" by Keller Jordan](https://kellerjordan.github.io/posts/muon/)
+<img width="825" height="625" alt="image" src="https://github.com/user-attachments/assets/dda2d910-b3ea-43d6-8a93-eea273da3ef8" />
