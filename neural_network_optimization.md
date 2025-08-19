@@ -1,4 +1,15 @@
 # Neural Network Optimization
+* <details>
+  <summary> Constraint Optimization </summary>
+  <img width="1331" height="1600" alt="image" src="https://github.com/user-attachments/assets/b49e5154-ec13-434e-8dbd-d6c4302820a7" />
+ </details>
+ 
+* <details>
+  <summary> Taylor Series and approximation error </summary>
+  <img width="1521" height="1050" alt="image" src="https://github.com/user-attachments/assets/053d3a0c-c485-4501-9352-1d5fc08da28c" />
+  <img width="1600" height="401" alt="image" src="https://github.com/user-attachments/assets/2c6fcdf7-99a8-4369-9dbe-8a7eaf8e3242" />
+ </details>
+ 
 ## Momentum
 * <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d4e66c8d-ee41-403a-a7ce-add3a707b2e3" />
 * <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9a192232-04cc-4467-8b51-52af23c558eb" />
@@ -37,7 +48,8 @@ These up and down oscillations slow down gradient descent, preventing the use of
 ---
 
 ## Second-order methods
-* 
+* <img width="1600" height="1511" alt="image" src="https://github.com/user-attachments/assets/458f9277-ecdf-4344-a60d-f7ce03d2767b" />
+* <img width="611" height="243" alt="image" src="https://github.com/user-attachments/assets/d3ac8ebb-7a5e-4dc7-bd96-e3a7ab60662f" />
 
 ---
 
@@ -82,12 +94,6 @@ These up and down oscillations slow down gradient descent, preventing the use of
   <img width="1012" height="701" alt="image" src="https://github.com/user-attachments/assets/06f70b21-48c2-45d0-95b8-8c1f716b5d8b" />
 * Didn't try many hyperparameters for Muon, and it outperformed all the others
   <img width="1012" height="701" alt="image" src="https://github.com/user-attachments/assets/b123ac96-6578-46bc-87f3-7ed6a76f0c4f" />
-
-
-
-
-
-
 
 ---
 ## Additional Notes on Neural Network Optimization
