@@ -48,6 +48,12 @@ These up and down oscillations slow down gradient descent, preventing the use of
 ---
 
 ## Second-order methods
+* <img width="346" height="553" alt="image" src="https://github.com/user-attachments/assets/37a30c4b-e6ab-4f9c-b2cb-c4cb847aec9a" />
+  <img width="1230" height="881" alt="image" src="https://github.com/user-attachments/assets/feb18b35-02cf-4840-aec2-e4f0c45ee391" />
+  
+  [Newton's Method on Wikipedia](https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization)
+  
+  We want to choose the best step size $del w$ that minimizes this quadratic approximation
 * <img width="1600" height="1511" alt="image" src="https://github.com/user-attachments/assets/458f9277-ecdf-4344-a60d-f7ce03d2767b" />
 * <img width="611" height="243" alt="image" src="https://github.com/user-attachments/assets/d3ac8ebb-7a5e-4dc7-bd96-e3a7ab60662f" />
 
