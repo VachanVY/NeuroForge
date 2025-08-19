@@ -7,7 +7,7 @@ class Optimizer:
     def step(self): 
         raise NotImplementedError("Optimizer step not implemented")
     def zero_grad(self):
-        for param in self.parameters:
+        for param in self.parameters: # type: ignore # vs code was giving annoying swiggly lines
             param.grad = None
 
 
@@ -43,7 +43,7 @@ class SGDMomentum(Optimizer):
         # NOTE(VachanVY): Compared this and above, the above converges faster and torch too follows the above method!
         # for param, velocity in zip(self.parameters, self.vdw):
         #     velocity.mul_(self.beta).add_(param.grad, alpha=1 - self.beta)
-        #     param -= self.lr * velocity        
+        #     param -= self.lr * velocity
 
 
 class RMSProp(Optimizer):
@@ -88,3 +88,8 @@ class Adam(Optimizer):
             vel_ema_hat = vel_ema / (1 - self.betas[0] ** self.t)
             sqvel_ema_hat = sqvel_ema / (1 - self.betas[1] ** self.t)
             param -= self.lr * vel_ema_hat / (torch.sqrt(sqvel_ema_hat) + self.eps)
+
+
+class Muon(Optimizer):
+    """MomentUm Orthogonalized Newton-Shultz"""
+    def __init__(self, parameters:list[Tensor], learning_rate:float, beta1:float)
