@@ -80,6 +80,8 @@ These up and down oscillations slow down gradient descent, preventing the use of
   Let's increase more for SGD and decrease for RMSProp and Adam
 * So, yes, different lr is optimal for different optimizers
   <img width="1012" height="701" alt="image" src="https://github.com/user-attachments/assets/06f70b21-48c2-45d0-95b8-8c1f716b5d8b" />
+* Didn't try many hyperparameters for Muon, and it outperformed all the others
+  <img width="1012" height="701" alt="image" src="https://github.com/user-attachments/assets/b123ac96-6578-46bc-87f3-7ed6a76f0c4f" />
 
 
 
