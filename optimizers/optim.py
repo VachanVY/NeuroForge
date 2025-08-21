@@ -1,6 +1,6 @@
 import torch
-from torch import Tensor, nn
-del torch.optim # ;)
+from torch import Tensor
+# del torch.optim # ;)
 
 
 class Optimizer:
@@ -39,13 +39,13 @@ class SGDMomentum(Optimizer):
             if param.grad is None: continue
             velocity.mul_(self.beta).add_(param.grad, alpha=self.lr)
             param -= velocity
-        
-        # NOTE(VachanVY): Compared this and above, the above converges faster and torch too follows the above method!
+
+        # NOTE(VachanVY): Compared this and above, the above converges faster (no magic, just math; lr*beta vs lr) and torch too follows the above method!
         # for param, velocity in zip(self.parameters, self.vdw):
         #     velocity.mul_(self.beta).add_(param.grad, alpha=1 - self.beta)
         #     param -= self.lr * velocity
 
-
+# FIXME(VachanVY): Getting nans for float16... Investigate
 class RMSProp(Optimizer):
     """beta2: Usually set to 0.99"""
     def __init__(self, parameters:list[Tensor], learning_rate:float, beta2:float):
@@ -62,7 +62,7 @@ class RMSProp(Optimizer):
             vgrad_sq.mul_(self.beta2).add_(param.grad.square(), alpha=1 - self.beta2)
             param -= self.lr * param.grad / (torch.sqrt(vgrad_sq) + 1e-8)
 
-
+# FIXME(VachanVY): Getting nans for float16... Investigate
 class Adam(Optimizer):
     """| beta1: Usually set to 0.9 | beta2: Usually set to 0.999 |"""
     def __init__(self, parameters:list[Tensor], learning_rate:float=1e-3, beta1:float=0.9, beta2:float=0.999, eps:float=1e-8):
@@ -90,6 +90,7 @@ class Adam(Optimizer):
             param -= self.lr * vel_ema_hat / (torch.sqrt(sqvel_ema_hat) + self.eps)
 
 
+# FIXME(VachanVY): Getting nans for float16... Investigate
 class Muon(Optimizer):
     """
     MomentUm Orthogonalized Newton-Schultz\n
@@ -144,7 +145,7 @@ class Muon(Optimizer):
         # else:        update = momentum
         update = grad.lerp_(velocity, beta) if nesterov else velocity
         if update.ndim == 4: # for the case of conv filters
-            update = update.view(len(update), -1)
+            update = update.reshape(len(update), -1)
         update = Muon.zeropower_via_newtonschulz5(update, steps=ns_steps)
         update.mul_(max(1, grad.size(-2) / grad.size(-1))**0.5) # scale by max(1, sqrt(rows/cols)) # IDK WHY?
         return update.reshape(shape)

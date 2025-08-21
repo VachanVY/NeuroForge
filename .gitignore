@@ -6,3 +6,4 @@ temp*
 delete
 __pycache__
 _*
+cifar10
