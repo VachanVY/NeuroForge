@@ -254,7 +254,7 @@ Now the term in the exp (don't take the bias) is the expectation of ![alt text](
   <img width="884" height="1381" alt="image" src="https://github.com/user-attachments/assets/d3497508-567c-4453-860f-8897bc02cdb2" />
 </details>
 
-* Not yet fully converged, takes a lot of time to train as the code is not optimized (if you train it for some reason, send a Pull request)
+* Not yet fully converged, used a low training rate (by mistake), actually 0.1 works for such small networks (if you train it for some reason, send a Pull request)
 
 <img width="629" height="492" alt="image" src="https://github.com/user-attachments/assets/16db8ece-6a60-4339-b187-e935fab9f5c3" />
 
