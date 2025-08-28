@@ -1,3 +1,8 @@
+"""
+This file is written by Claude 4, using my version of torch.nn.functional and torch.nn
+See lenet/nn.py and lenet/functional.py, this file is dummy
+"""
+
 import torch
 from torch import Tensor
 
