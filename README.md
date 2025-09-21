@@ -1,6 +1,7 @@
 # Contents
 * [Neural Networks](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#neural-networks) => [*nn.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/nn.ipynb)
   * [Logistic Regression](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
+    * [Forward Propagation, Back Propagation Equations Derived — trained using gradient descent](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
   * [MLP](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
     * [Forward Propagation (Explained using Pen and Paper)](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
     * [Back Propagation (Equations Derived using Pen and Paper)](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
@@ -16,9 +17,9 @@
 * [LeNet: Convolutional Neural Networks from scratch](https://github.com/VachanVY/NeuroForge/tree/main?tab=readme-ov-file#lenet-convolutional-neural-networks-from-scratch) => [*train_lenet.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/train_lenet.ipynb)
   * [Basics of Convolutional Operator](https://github.com/VachanVY/NeuroForge/tree/main?tab=readme-ov-file#lenet-convolutional-neural-networks-from-scratch)
   * [LeNet from scratch: Forward Propagation and Backward Propagation derived using pen & paper and coded](https://github.com/VachanVY/NeuroForge/tree/main#:~:text=My%20notes%20for%20LeNet%20forward%20propagation%20and%20backwards%20propagation)
-* [Neural Network Optimization](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#neural-network-optimization) => [*optim.py* -- custom impl of SGD w-w/o Momentum, RMSProp, Adam, Muon](https://github.com/VachanVY/NeuroForge/blob/main/optimizers/optim.py)
-  * [Momentum](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#momentum) | [Bias Correction](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#bias-correction) | [Adaptive Learning Rate -- RMSProp](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adaptive-learning-rate) |
-    [Nestrov accelerated gradient](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#nestrov-accelerated-gradient) | [Adam](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam) | [Second Order Optimization Methods -- Newton's method](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#second-order-methods)
+* [Neural Network Optimization](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#neural-network-optimization) => [*optim.py* — custom impl of SGD w-w/o Momentum, RMSProp, Adam, Muon](https://github.com/VachanVY/NeuroForge/blob/main/optimizers/optim.py)
+  * [Momentum](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#momentum) | [Bias Correction](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#bias-correction) | [Adaptive Learning Rate — RMSProp](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adaptive-learning-rate) |
+    [Nestrov accelerated gradient](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#nestrov-accelerated-gradient) | [Adam](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#adam) | [Second Order Optimization Methods — Newton's method](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#second-order-methods)
   * [**Muon**: an-optimizer-for-hidden-layers-in-neural-networks](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#muon-an-optimizer-for-hidden-layers-in-neural-networks)
   * [**Benchmarking Muon, Adam, RMSProp, and SGD on CIFAR-10 dataset**](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#benchmarking-optimizers-on-cifar-10)
   * [More on Adam and AdamW](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#more-on-adam-and-adamw-adam-with-weight-decay-optimizers)
@@ -44,6 +45,9 @@
 * Take a look at the below example\
     ![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Exam_pass_logistic_curve.svg/600px-Exam_pass_logistic_curve.svg.png)
 * Forwardprop
+  * <img width="1600" height="1472" alt="image" src="https://github.com/user-attachments/assets/2a48b5c2-d8e6-4361-a0a8-0ff2d05ee422" />
+  * 
+
     ```python
     X = inputs.reshape((B, H*W*1)) # (B, F=H*W) <= (B, H, W, 1) = (Batch, Height, Width, Num_Channels)
     """
@@ -81,10 +85,14 @@
 
     `y_i = 0 (digit is not 9)`; Loss is `-log(1 - a_i)` which is negative log-probability of the digit not being `9`; So we want to minimize `-log(1 - a_i)` which means we want to maximize `1 - a_i (the probability of digit not being 9)` when the digit is not 9 which is again what we want 
 
-* Now using the below equations, we'll calculate how we should change the parameters so that they incorporate the learnings from the cost function and make the model better\
-    ![Alt text](images/image.png)\
-    where Y is the true classes (9 or not 9)\
-    We'll go through the derivations for the gradients in detail in the MLPs section below
+* Back Propagation
+ * Now using the below equations, we'll calculate how we should change the parameters so that they incorporate the learnings from the cost function and make the model better\
+     ![Alt text](images/image.png)\
+     where Y is the true classes (9 or not 9)\
+ * <img width="1600" height="1419" alt="image" src="https://github.com/user-attachments/assets/6d321137-6fac-4290-ba61-038477f309d0" />
+ * <img width="1599" height="1343" alt="image" src="https://github.com/user-attachments/assets/21a8a17c-f7ed-4671-a3e3-f976dcc727f0" />
+ * <img width="1600" height="557" alt="image" src="https://github.com/user-attachments/assets/ec9f8301-91e9-4f5e-bdb8-0a4560b2741d" />
+
 * We'll change the parameters according to the equations below\
     `W = W - lr * dJ_dW`\
     `B = B - lr * dJ_dB`\
@@ -92,6 +100,11 @@
 * The above processes are usually not done taking the whole training set, this results in accurate gradients but this process is very slow as in deep learning, datasets are very large\
  Instead we take `batch_size` number of train examples from the dataset and do the above process, this results in the gradients being less accurate but this is much faster and has proved to be very much effective in practice
 * We repeat the above processes for a number of `epochs`, till the model converges, see the training loop sub-section in the MLPs section for more details
+
+
+* <img width="1188" height="495" alt="image" src="https://github.com/user-attachments/assets/e2e3ee57-0379-47f0-8d6c-f42292db8cc6" />
+
+  Trained on **Breast Cancer Wisconsin** dataset
 
 ---
 ## MLPs
