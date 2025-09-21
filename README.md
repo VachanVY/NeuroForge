@@ -1,7 +1,8 @@
 # Contents
 * [Neural Networks](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#neural-networks) => [*nn.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/nn.ipynb)
-  * [Logistic Regression](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
+  * [Logistic Regression](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression) => [*logistic_regression.ipynb*](https://github.com/VachanVY/NeuroForge/blob/main/logistic_regression.ipynb)
     * [Forward Propagation, Back Propagation Equations Derived — trained using gradient descent](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
+    * [Why you shouldn't use `sigmoid` activation in *hidden* layers in Neural Networks]()
   * [MLP](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
     * [Forward Propagation (Explained using Pen and Paper)](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
     * [Back Propagation (Equations Derived using Pen and Paper)](https://github.com/VachanVY/NeuroForge?tab=readme-ov-file#logistic-regression)
@@ -105,6 +106,12 @@
 * <img width="1188" height="495" alt="image" src="https://github.com/user-attachments/assets/e2e3ee57-0379-47f0-8d6c-f42292db8cc6" />
 
   Trained on **Breast Cancer Wisconsin** dataset
+
+### Why you shouldn't use `sigmoid` activation in *hidden* layers in Neural Networks
+* <img width="1052" height="248" alt="image" src="https://github.com/user-attachments/assets/09b9b7e7-58ae-4c91-ad14-52d10659796f" />
+* <img width="1399" height="603" alt="image" src="https://github.com/user-attachments/assets/e0d564cc-d0d5-4b53-8ae5-f305fd95becd" />
+
+  As the input to the sigmoid activation function reaches one of the extremes (as seen in the figure), its gradient (wrt input ` o `) goes to 0, this can cause vanishing gradients problem especially when using very deep neural networks, hence never use sigmoid in **hidden layers** of neural networks
 
 ---
 ## MLPs
