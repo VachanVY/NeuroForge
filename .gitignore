@@ -7,3 +7,4 @@ delete
 __pycache__
 _*
 cifar10
+.gradio
