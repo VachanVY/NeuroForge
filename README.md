@@ -118,7 +118,11 @@
   
   <img width="1399" height="603" alt="image" src="https://github.com/user-attachments/assets/e0d564cc-d0d5-4b53-8ae5-f305fd95becd" />
 
-  As the input to the sigmoid activation function reaches one of the extremes (as seen in the figure), its gradient (wrt input ` o `) goes to 0, this can cause vanishing gradients problem especially when using very deep neural networks, hence never use sigmoid in **hidden layers** of neural networks
+  As the input to the sigmoid activation function reaches one of the extremes (as seen in the figure), its gradient (wrt input ` o `) goes to 0, which can cause the  vanishing gradients problem, especially when using very deep neural networks; hence, never use sigmoid in **hidden layers** of neural networks
+
+* Even Tanh!
+  
+  <img width="1833" height="530" alt="image" src="https://github.com/user-attachments/assets/1b867ab9-5f2d-4204-9b12-108306a143d6" />
 
 ---
 ## MLPs
